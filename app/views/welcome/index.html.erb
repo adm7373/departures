@@ -1,0 +1,27 @@
+<h2>Hello World!</h2>
+<p>
+  The time is now: <%= Time.now %>
+
+</p>
+<table>
+  <tr>
+    <th>Origin</th>
+    <th>Carrier</th>
+    <th>Time</th>
+    <th>Destination</th>
+    <th>Train#</th>
+    <th>Track#</th>
+    <th>Status</th>
+  </tr>
+  <% @data.each do |train| %>
+    <tr>
+      <td> <%= train[:origin] %></td>
+      <td> <%= train[:carrier] %></td>
+      <td> <%= train[:time] %></td>
+      <td> <%= train[:destination] %></td>
+      <td> <%= train[:train_number] %></td>
+      <td> <%= train[:track_number] %></td>
+      <td> <%= train[:status] %></td>
+    </tr>
+  <% end %>
+</table>
