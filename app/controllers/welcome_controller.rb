@@ -11,8 +11,8 @@ class WelcomeController < ApplicationController
     @data.each do |t|
       t[:origin] = t["Origin"]
       t[:carrier] = "MBTA"
-      t[:scheduled] = DateTime.strptime(t["ScheduledTime"], '%s').strftime("%I:%M %P")
-      t[:estimated] = DateTime.strptime(t["ScheduledTime"] + t["Lateness"], '%s').strftime("%I:%M %P")
+      t[:scheduled] = DateTime.strptime(t["ScheduledTime"], '%s').in_time_zone('Eastern Time (US & Canada)').strftime("%I:%M %P")
+      t[:estimated] = DateTime.strptime(t["ScheduledTime"] + t["Lateness"], '%s').in_time_zone('Eastern Time (US & Canada)').strftime("%I:%M %P")
       t[:destination] = t["Destination"]
       t[:train_number] = t["Trip"]
       t[:track_number] = t["Track"] || "TBD"
