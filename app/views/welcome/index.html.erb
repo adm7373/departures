@@ -1,12 +1,12 @@
 <h2>MBTA Departures</h2>
 <div class="board">
   <div id="date" class="led-display pull-left">
-    <p><%= Time.now.strftime("%A") %></p>
-    <p><%= Time.now.strftime("%m-%d-%Y") %></p>
+    <p><%= Time.now.utc.in_time_zone('Eastern Time (US & Canada)').strftime("%A") %></p>
+    <p><%= Time.now.utc.in_time_zone('Eastern Time (US & Canada)').strftime("%m-%d-%Y") %></p>
   </div>
   <div id="time" class="led-display pull-right">
     <p>Current Time</p>
-    <p><%= Time.now.strftime("%I:%M %P") %></p>
+    <p><%= Time.now.utc.in_time_zone('Eastern Time (US & Canada)').strftime("%I:%M %P") %></p>
   </div>
   <table>
     <tr class="column-header">
