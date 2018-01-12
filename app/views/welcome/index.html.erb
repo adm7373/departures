@@ -1,27 +1,33 @@
-<h2>Hello World!</h2>
-<p>
-  The time is now: <%= Time.now %>
-
-</p>
-<table>
-  <tr>
-    <th>Origin</th>
-    <th>Carrier</th>
-    <th>Time</th>
-    <th>Destination</th>
-    <th>Train#</th>
-    <th>Track#</th>
-    <th>Status</th>
-  </tr>
-  <% @data.each do |train| %>
-    <tr>
-      <td> <%= train[:origin] %></td>
-      <td> <%= train[:carrier] %></td>
-      <td> <%= train[:time] %></td>
-      <td> <%= train[:destination] %></td>
-      <td> <%= train[:train_number] %></td>
-      <td> <%= train[:track_number] %></td>
-      <td> <%= train[:status] %></td>
+<h2>MBTA Departures</h2>
+<div class="board">
+  <div id="date" class="led-display pull-left">
+    <p><%= Time.now.strftime("%A") %></p>
+    <p><%= Time.now.strftime("%m-%d-%Y") %></p>
+  </div>
+  <div id="time" class="led-display pull-right">
+    <p>Current Time</p>
+    <p><%= Time.now.strftime("%I:%M %P") %></p>
+  </div>
+  <table>
+    <tr class="column-header">
+      <th>Origin</th>
+      <th>Carrier</th>
+      <th>Time</th>
+      <th>Destination</th>
+      <th>Train#</th>
+      <th>Track#</th>
+      <th>Status</th>
     </tr>
-  <% end %>
-</table>
+    <% @data.each do |train| %>
+      <tr class="led-display">
+        <td> <%= train[:origin] %></td>
+        <td> <%= train[:carrier] %></td>
+        <td> <%= train[:estimated] %></td>
+        <td> <%= train[:destination] %></td>
+        <td> <%= train[:train_number] %></td>
+        <td> <%= train[:track_number] %></td>
+        <td class="<%= train[:status_class] %>"> <%= train[:status] %></td>
+      </tr>
+    <% end %>
+  </table>
+</div>
