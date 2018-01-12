@@ -8,17 +8,31 @@ class WelcomeController < ApplicationController
     csvData = CSV.parse(csv, {headers: true})
     @data = csvData.map(&:to_h)
 
-    @data.each do |train|
-      train[:origin] = train["Origin"]
-      train[:carrier] = "MBTA"
-      train[:time] = DateTime.strptime(train["ScheduledTime"], '%s')
-      train[:destination] = train["Destination"]
-      train[:train_number] = train["Trip"]
-      train[:track_number] = train["Track"] || "TBD"
-      train[:status] = train["Status"] || "???"
+    @data.each do |t|
+      t[:origin] = t["Origin"]
+      t[:carrier] = "MBTA"
+      t[:scheduled] = DateTime.strptime(t["ScheduledTime"], '%s').strftime("%I:%M %P")
+      t[:estimated] = DateTime.strptime(t["ScheduledTime"] + t["Lateness"], '%s').strftime("%I:%M %P")
+      t[:destination] = t["Destination"]
+      t[:train_number] = t["Trip"]
+      t[:track_number] = t["Track"] || "TBD"
+      t[:status] = t["Status"] || "???"
+      t[:status_class] = case t["Status"]
+      when "Delayed", "Late"
+        "late"
+      when "Now Boarding", "All Aboard", "Arriving", "Arrived"
+        "now"
+      when "Hold", "Cancelled"
+        "problem"
+      when "End", "TBD", "Info to follow"
+        "unknown"
+      when "On Time"
+        "on-time"
+      when "Departed"
+        "gone"
+      end
     end
-    @north = @data.select { |train| train["Origin"] == "North Station" }
-    @south = @data.select { |train| train["Origin"] == "South Station" }
+
 
   end
 end
